@@ -1,0 +1,14 @@
+.idea/
+*/.idea/
+
+lib/
+*/lib/
+out/
+*/out
+
+*.jar
+*/*.jar
+*.zip
+*/*.zip
+*.iml
+*/*.iml
