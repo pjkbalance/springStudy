@@ -92,26 +92,67 @@ proxy.png
 目前使用 javasist 生成动态代理
 
 jdk 动态代理
-Proxy 类
 InvocationHandler 接口 - 代理实例 (Proxy) 的 调用处理程序 ( rent() ) 实现的接口
 每个 代理实例 具有一个 关联的 调用处理程序。对 代理实例 调用方法时 (proxy.rent())，将对方法进行编码并将其指派给他调用处理程序的 invoke 方法
 invoke(Object proxy, Method method, Object[] args)
+在代理实例上处理方法调用并返回结果
+  proxy：代理实例
+  method：代理实例的方法
+  args：参数
+Proxy 类
+提供用于创建动态代理类和实例的静态方法，还是这些方法创建的所有动态代理类的超类
+static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)
+  loader: 类加载器
+  interfaces：代理类需要实现的借口
+  h：纸牌方法调用的调用处理程序
+一个动态代理一般代理 多个 属于 某一类业务 的类
 
 
+面向切面编程 AOP - 在不改变原有代码的情况下新增功能
+作用
+  提供声明式服务（事务）
+  允许用户实现自定义切面
+传统编程模式
+  纵向编程模式：传统编程模式.png
+AOP编程模式
+  横向编程模式：横向编程模式.png
+  实现机理：动态代理
+关注点：增加的某一类 与实际业务无关的 功能，如：日志/安全/缓存/事务/异常 等
+切面：一个关注点的模块化
+连接点：某个方法（业务方法）的执行
+通知：在切面某个特定的连接点上执行的动作
+  前置通知
+  后置通知
+  异常通知
+  最终通知
+  环绕通知
+织入：将切面连接到其他应用程序类型或者对象上，并创建一个被通知的对象
+
+使用 spring 实现 AOP
+实现方式
+  通过 Spring API 实现（cn.jk.study.spring6）
+    <aop:config>
+        <!-- 第一个 * : 返回类型 -->
+        <aop:pointcut id="logPointCut" expression="execution(* cn.jk.study.spring6.service.impl.*.*(..))"/>
+        <aop:advisor advice-ref="beforeLog" pointcut-ref="logPointCut"/>
+        <aop:advisor advice-ref="afterLog" pointcut-ref="logPointCut"/>
+    </aop:config>
+  通过 自定义类 实现（cn.jk.study.spring7）
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* cn.jk.study.spring7.service.impl.*.*(..))"/>
+        <aop:aspect ref="log">
+            <aop:before method="before" pointcut-ref="pointcut"/>
+            <aop:after method="after" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+  通过 注解 实现（cn.jk.study.spring8）
+    <aop:aspectj-autoproxy/>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+整合Mybatis（cn.jk.study.spring9）
+  导入 jar 包
+  编写配置文件
+  实现
 
 
 
